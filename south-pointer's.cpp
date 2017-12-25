@@ -1,8 +1,8 @@
 #include<Graph.h>
 void Manage::print(Graph& G, int v, double dist[], int path[])
 {
-	cout << endl << "Â·ÓÉÆ÷" << G.getvalue(v) << "µÄÂ·ÓÉ±í£º" << endl;
-	cout << "Ä¿µÄµØÖ·      ÏÂÒ»Ìø" << endl;
+	cout << endl << "è·¯ç”±å™¨" << G.getvalue(v) << "çš„è·¯ç”±è¡¨ï¼š" << endl;
+	cout << "ç›®çš„åœ°å€      ä¸‹ä¸€è·³" << endl;
 	int i, j, k;
 	int n = G.NumberOfVertices();
 	int *d = new int[n];
@@ -10,7 +10,7 @@ void Manage::print(Graph& G, int v, double dist[], int path[])
 	{
 		if (path[i] == -1 && i != v)
 		{
-			cout << "Â·ÓÉÆ÷" << G.getvalue(i) << "        " << "²»¿É´ï\n";
+			cout << "è·¯ç”±å™¨" << G.getvalue(i) << "        " << "ä¸å¯è¾¾\n";
 			continue;
 		}
 
@@ -23,19 +23,19 @@ void Manage::print(Graph& G, int v, double dist[], int path[])
 				d[k++] = j;
 				j = path[j];
 			}
-			cout << "Â·ÓÉÆ÷" << G.getvalue(i) << "        ";
+			cout << "è·¯ç”±å™¨" << G.getvalue(i) << "        ";
 			if (k > 0)
 			{
 				cout << G.getvalue(d[--k]) << " " << endl;
 			}
-			//				cout << "×î¶ÌÂ·¾¶³¤¶ÈÎª£º" << dist[i] << endl;
+			//				cout << "æœ€çŸ­è·¯å¾„é•¿åº¦ä¸ºï¼š" << dist[i] << endl;
 		}
 	}
 	delete[] d;
 }
-/ dijstraËã·¨Çó×î¶ÌÂ·¾¶
+/ dijstraç®—æ³•æ±‚æœ€çŸ­è·¯å¾„
 void Manage::ShortestPath(Graph& G, int v, int *path, double *dist)
-{//GraphÊÇÒ»¸ö´øÈ¨ÓÐÏòÍ¼£¬±¾Ëã·¨½¨Á¢Ò»¸öÊý×é£¬dist[j],0<=j<n;ÊÇµ±Ç°Çóµ½µÄ´Ó¶¥µãvµ½¶¥µãjµÄ×î¶ÌÂ·¾¶³¤¶È£¬Í¬Ê±ÓÃÊý×épath´æ·ÅÇóµ½µÄ×î¶ÌÂ·¾¶
+{//Graphæ˜¯ä¸€ä¸ªå¸¦æƒæœ‰å‘å›¾ï¼Œæœ¬ç®—æ³•å»ºç«‹ä¸€ä¸ªæ•°ç»„ï¼Œdist[j],0<=j<n;æ˜¯å½“å‰æ±‚åˆ°çš„ä»Žé¡¶ç‚¹våˆ°é¡¶ç‚¹jçš„æœ€çŸ­è·¯å¾„é•¿åº¦ï¼ŒåŒæ—¶ç”¨æ•°ç»„pathå­˜æ”¾æ±‚åˆ°çš„æœ€çŸ­è·¯å¾„
 	int n = G.NumberOfVertices();
 	bool *S = new bool[n];
 	int i, j, k;
@@ -69,7 +69,7 @@ void Manage::ShortestPath(Graph& G, int v, int *path, double *dist)
 		for (k = 0; k<n; k++)
 		{
 			w = G.getWeight(u, k);
-			//¸üÐÂÓÐÖÐ¼ä½áµãµÄ×î¶ÌÂ·¾¶
+			//æ›´æ–°æœ‰ä¸­é—´ç»“ç‚¹çš„æœ€çŸ­è·¯å¾„
 			if (S[k] == false && w <G.maxWeight && dist[u] + w<dist[k])
 			{
 				dist[k] = dist[u] + w;
@@ -84,7 +84,7 @@ bool Manage::GetInformation()
 {
 	Vertex vertex;
 	Edge edge;
-	//¶Á½áµã
+	//è¯»ç»“ç‚¹
 	ifstream out("vertex.txt", ios::in);
 	if (!out)
 	{
@@ -94,7 +94,7 @@ bool Manage::GetInformation()
 	int ch = out.get();
 	if (out.eof())
 	{
-		cout << "ÎÄ¼þÎª¿Õ\n";
+		cout << "æ–‡ä»¶ä¸ºç©º\n";
 		out.close();
 	}
 	else {
@@ -113,7 +113,7 @@ bool Manage::GetInformation()
 		}
 		out.close();
 	}
-	//¶Á±ß
+	//è¯»è¾¹
 	ifstream OUT("Edge.txt", ios::in);
 	if (!OUT)
 	{
@@ -123,7 +123,7 @@ bool Manage::GetInformation()
 	ch = OUT.get();
 	if (OUT.eof())
 	{
-		cout << "ÎÄ¼þÎª¿Õ\n";
+		cout << "æ–‡ä»¶ä¸ºç©º\n";
 		OUT.close();
 	}
 	else {
@@ -148,13 +148,13 @@ bool Manage::shortestpath()
 	int num = Route.NumberOfVertices();
 	if (num == -1)
 	{
-		cout << "Ã»ÓÐÕâ¸ö½áµã£¡" << endl;
+		cout << "æ²¡æœ‰è¿™ä¸ªç»“ç‚¹ï¼" << endl;
 		return false;
 	}
 	//int *distance = new int[1000];
 	//int *path = new int[1000];
 	int ans;
-	cout << "ÇëÊäÈëÆðÊ¼½áµã±àºÅ\n";
+	cout << "è¯·è¾“å…¥èµ·å§‹ç»“ç‚¹ç¼–å·\n";
 	cin >> ans;
 	ans = Route.getVertexPos(ans);
 	ShortestPath(Route, ans, path, dist);
