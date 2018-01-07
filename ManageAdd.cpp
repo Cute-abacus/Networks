@@ -16,11 +16,9 @@ bool Manage::addVertex()
 	write1();
 	return true;
 }
-/*
-以写的方式打开文件，将图中结点以for循环形式写入文件，包括结点的id及name
+/*以写的方式打开文件，将图中结点以for循环形式写入文件，包括结点的id及name
 实现了图的结点的更新
-关闭文件
-*/
+关闭文件*/
 void Manage::write1()
 {
 	ofstream infile; 
@@ -48,11 +46,9 @@ bool Manage::addEdge()
 	Route.insertEdge(b, c, cost);
 	write2();
 }
-/*
-以写的方式打开文件，将图中的边以for循环形式写入文件，包括边的id及其权值
+/*以写的方式打开文件，将图中的边以for循环形式写入文件，包括边的id及其权值
 实现图的边的更新
-关闭文件
-*/
+关闭文件*/
 void Manage::write2()
 {
 	ofstream infile;
