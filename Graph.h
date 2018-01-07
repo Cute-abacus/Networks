@@ -37,11 +37,11 @@ public:
 	{
 		return numEdges;
 	}
-	double getWeight(int v1, int v2);
-	int getFirstNeighbor(int v);
-	int getNextNeighbor(int v, int w);
-	bool insertVertex(const Vertex& vertex);
-	int NumberOfVertices()
+	double getWeight(int v1, int v2);//获得边的权值
+	int getFirstNeighbor(int v);//得到第一个邻居
+	int getNextNeighbor(int v, int w);//得到下一个邻居
+	bool insertVertex(const Vertex& vertex);//插入结点
+	int NumberOfVertices()//获得结点的个数
 	{
 		return numVertices;
 	}
@@ -52,7 +52,7 @@ protected:
 public:
 	int numEdges;//边数
 	int numVertices;//目前顶点数目
-	int getVertexPos(int vertex)
+	int getVertexPos(int vertex)//得到点的序号
 	{
 		for (int i = 0; i < numVertices; i++)
 		{
