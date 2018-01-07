@@ -2,7 +2,6 @@
 #include<iostream>
 #include<fstream>
 #include<string.h>
-#include"SeqQueue.h"
 #include"Graph.h"
 using namespace std;
 //这里是管理类，管理类的主要功能有
