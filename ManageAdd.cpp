@@ -16,10 +16,15 @@ bool Manage::addVertex()
 	write1();
 	return true;
 }
+/*
+以写的方式打开文件，将图中结点以for循环形式写入文件，包括结点的id及name
+实现了图的结点的更新
+关闭文件
+*/
 void Manage::write1()
 {
-	ofstream infile;
-	infile.open("vertex.txt");
+	ofstream infile; 
+	infile.open("vertex.txt");  
 	for (int i = 0; i < Route.NumberOfVertices(); i++)
 	{
 		infile << Route.NodeTable[i].name << ' ' << Route.NodeTable[i].id << '\n';
@@ -43,6 +48,11 @@ bool Manage::addEdge()
 	Route.insertEdge(b, c, cost);
 	write2();
 }
+/*
+以写的方式打开文件，将图中的边以for循环形式写入文件，包括边的id及其权值
+实现图的边的更新
+关闭文件
+*/
 void Manage::write2()
 {
 	ofstream infile;
@@ -59,6 +69,7 @@ void Manage::write2()
 	}
 	infile.close();
 }
+/*检查添加结点或边时路由表中是否已存在该结点或边*/
 bool Manage::check(int id)
 {
 	if (Route.getVertexPos(id) == -1)
