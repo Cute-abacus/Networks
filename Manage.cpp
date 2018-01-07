@@ -1,8 +1,8 @@
-#include<Graph.h>
+#include"Manage.h"
 void Manage::print(Graph& G, int v, double dist[], int path[])
 {
-	cout << endl << "è·¯ç”±å™¨" << G.getvalue(v) << "çš„è·¯ç”±è¡¨ï¼š" << endl;
-	cout << "ç›®çš„åœ°å€      ä¸‹ä¸€è·³" << endl;
+	cout << endl << "Â·ÓÉÆ÷" << G.getvalue(v) << "µÄÂ·ÓÉ±í£º" << endl;
+	cout << "Ä¿µÄµØÖ·      ÏÂÒ»Ìø" << endl;
 	int i, j, k;
 	int n = G.NumberOfVertices();
 	int *d = new int[n];
@@ -10,7 +10,7 @@ void Manage::print(Graph& G, int v, double dist[], int path[])
 	{
 		if (path[i] == -1 && i != v)
 		{
-			cout << "è·¯ç”±å™¨" << G.getvalue(i) << "        "<< "ä¸å¯è¾¾\n";
+			cout << "Â·ÓÉÆ÷" << G.getvalue(i) << "        " << "²»¿É´ï\n";
 			continue;
 		}
 
@@ -18,24 +18,68 @@ void Manage::print(Graph& G, int v, double dist[], int path[])
 		{
 			j = i;
 			k = 0;
-			while (j !=v )
+			while (j != v)
 			{
 				d[k++] = j;
 				j = path[j];
 			}
-			cout << "è·¯ç”±å™¨" << G.getvalue(i) << "        ";
+			cout << "Â·ÓÉÆ÷" << G.getvalue(i) << "        ";
 			if (k > 0)
 			{
 				cout << G.getvalue(d[--k]) << " " << endl;
 			}
-			//				cout << "æœ€çŸ­è·¯å¾„é•¿åº¦ä¸ºï¼š" << dist[i] << endl;
+			//				cout << "×î¶ÌÂ·¾¶³¤¶ÈÎª£º" << dist[i] << endl;
 		}
 	}
 	delete[] d;
 }
-/dijstraç®—æ³•æ±‚æœ€çŸ­è·¯å¾„
-void Manage::ShortestPath(Graph& G, int v,int *path,double *dist)
-{//Graphæ˜¯ä¸€ä¸ªå¸¦æƒæœ‰å‘å›¾ï¼Œæœ¬ç®—æ³•å»ºç«‹ä¸€ä¸ªæ•°ç»„ï¼Œdist[j],0<=j<n;æ˜¯å½“å‰æ±‚åˆ°çš„ä»é¡¶ç‚¹våˆ°é¡¶ç‚¹jçš„æœ€çŸ­è·¯å¾„é•¿åº¦ï¼ŒåŒæ—¶ç”¨æ•°ç»„pathå­˜æ”¾æ±‚åˆ°çš„æœ€çŸ­è·¯å¾„
+//dijstraËã·¨Çó×î¶ÌÂ·¾¶
+void Manage::ShortestPath(Graph& G, int v, int *path, double *dist)
+{//GraphÊÇÒ»¸ö´øÈ¨ÓĞÏòÍ¼£¬±¾Ëã·¨½¨Á¢Ò»¸öÊı×é£¬dist[j],0<=j<n;ÊÇµ±Ç°Çóµ½µÄ´Ó¶¥µãvµ½¶¥µãjµÄ×î¶ÌÂ·¾¶³¤¶È£¬Í¬Ê±ÓÃÊı×épath´æ·ÅÇóµ½µÄ×î¶ÌÂ·¾¶
+ /*int n = G.NumberOfVertices();//µÃµ½×ÜµãÊı
+ int j = v;//³õÊ¼»¯jÎª³ö·¢µã
+ int w;//¶¨ÒåÏÂÒ»½Úµã
+ int *dis = new int(n+5);//¾àÀëÊı×é
+ int *p = new int(n+5);//Â·¾¶Êı×é
+ bool *vis = new bool(n+5);//·ÃÎÊÊı×é
+ for (int i = 0; i < n; i++)//³õÊ¼»¯¸÷¸öÊı×é
+ {
+ p[i] = -1;
+ vis[i] = false;
+ dis[i] = G.maxWeight;
+ }
+ //
+ dis[v] = 0;//³ö·¢µãµ½×Ô¼ºµÄ¾àÀëÎª0
+ SeqQueue<int> Q;//¶¨ÒåÒ»¸ö»º´æ¶ÓÁĞ
+ Q.EnQueue(v);//Èë¶ÓÁĞ
+ while (!Q.IsEmpty())//µ±¶ÓÁĞ²»Îª¿ÕÊÇÖ´ĞĞ²Ù×÷
+ {
+ w = G.getFirstNeighbor(j);//µÃµ½jµÄµÚÒ»¸öÁÚ¾Ó
+ vis[j] = true;//µ±Ç°µãÒÑ¾­·ÃÎÊ¹ıÁË
+ while (w != -1)//ÓĞÁÚ¾Ó
+ {
+ if (w != v&&vis[w] == false)//µ±µ±Ç°ÁÚ¾Ó½áµãÃ»ÓĞ±»·ÃÎÊ¹ı
+ {
+ int d = G.getWeight(j, w);//µÃµ½Á½µãÁ¬±ß
+ if (d + dis[j] <dis[w])//µ±¾àÀë±äĞ¡ÊÇ
+ {
+ dis[w] = d + dis[j];//¸üĞÂ
+ p[w] = j;//¸üĞÂÂ·¾¶
+ }
+ Q.EnQueue(w);//½«ÁÚ¾Ó½áµãÈë¶ÓÁĞ
+ }
+ w = G.getNextNeighbor(j, w);//¼ÌĞø»ñÈ¡jµÄÏÂÒ»¸öÁÚ¾Ó
+ }
+ Q.DeQueue(j);//½«j´Ó¶ÓÁĞÖĞµ¯³ö
+ if (!Q.IsEmpty())
+ {
+ Q.getFront(j);
+ };//½«j¸³Îª¶ÓÊ×ÔªËØ
+ }
+ print(G, v, dis, p);//Êä³ö×îĞ¡Â·¾¶
+ return ;//·µ»Ø*/
+ //GraphÊÇÒ»¸ö´øÈ¨ÓĞÏòÍ¼£¬±¾Ëã·¨½¨Á¢Ò»¸öÊı×é£¬dist[j],0<=j<n;ÊÇµ±Ç°Çóµ½µÄ´Ó¶¥µãvµ½¶¥µãjµÄ×î¶ÌÂ·¾¶³¤¶È£¬Í¬Ê±ÓÃÊı×épath´æ·ÅÇóµ½µÄ×î¶ÌÂ·¾¶
+
 	int n = G.NumberOfVertices();
 	bool *S = new bool[n];
 	int i, j, k;
@@ -69,7 +113,7 @@ void Manage::ShortestPath(Graph& G, int v,int *path,double *dist)
 		for (k = 0; k<n; k++)
 		{
 			w = G.getWeight(u, k);
-			//æ›´æ–°æœ‰ä¸­é—´ç»“ç‚¹çš„æœ€çŸ­è·¯å¾„
+			//¸üĞÂÓĞÖĞ¼ä½áµãµÄ×î¶ÌÂ·¾¶
 			if (S[k] == false && w <G.maxWeight && dist[u] + w<dist[k])
 			{
 				dist[k] = dist[u] + w;
@@ -79,12 +123,11 @@ void Manage::ShortestPath(Graph& G, int v,int *path,double *dist)
 	}
 	print(G, v, dist, path);
 }
-
 bool Manage::GetInformation()
 {
 	Vertex vertex;
 	Edge edge;
-	//è¯»ç»“ç‚¹
+	//¶Á½áµã
 	ifstream out("vertex.txt", ios::in);
 	if (!out)
 	{
@@ -94,7 +137,7 @@ bool Manage::GetInformation()
 	int ch = out.get();
 	if (out.eof())
 	{
-		cout << "æ–‡ä»¶ä¸ºç©º\n";
+		cout << "ÎÄ¼şÎª¿Õ\n";
 		out.close();
 	}
 	else {
@@ -107,13 +150,13 @@ bool Manage::GetInformation()
 			out >> vertex.name >> vertex.id;
 			vertex.adj = NULL;
 			{
-			//	cout << "" << endl;
-			//	return false;
+				//	cout << "" << endl;
+				//	return false;
 			}
 		}
 		out.close();
 	}
-	//è¯»è¾¹
+	//¶Á±ß
 	ifstream OUT("Edge.txt", ios::in);
 	if (!OUT)
 	{
@@ -123,7 +166,7 @@ bool Manage::GetInformation()
 	ch = OUT.get();
 	if (OUT.eof())
 	{
-		cout << "æ–‡ä»¶ä¸ºç©º\n";
+		cout << "ÎÄ¼şÎª¿Õ\n";
 		OUT.close();
 	}
 	else {
@@ -132,7 +175,7 @@ bool Manage::GetInformation()
 		{
 			int v1, v2, cost;
 			OUT >> v1 >> v2 >> cost;
-		if(Route.insertEdge(v1, v2, cost) == false)
+			if (Route.insertEdge(v1, v2, cost) == false)
 			{
 				//cout << "fail to insert the vertex" << endl;
 				//return false;
@@ -148,70 +191,30 @@ bool Manage::shortestpath()
 	int num = Route.NumberOfVertices();
 	if (num == -1)
 	{
-		cout << "æ²¡æœ‰è¿™ä¸ªç»“ç‚¹ï¼" << endl;
+		cout << "Ã»ÓĞÕâ¸ö½áµã£¡" << endl;
 		return false;
 	}
 	//int *distance = new int[1000];
 	//int *path = new int[1000];
 	int ans;
-	cout << "è¯·è¾“å…¥èµ·å§‹ç»“ç‚¹ç¼–å·\n";
+	cout << "ÇëÊäÈëÆğÊ¼½áµã±àºÅ\n";
 	cin >> ans;
 	ans = Route.getVertexPos(ans);
-		ShortestPath(Route, ans,path, dist);
+	ShortestPath(Route, ans, path, dist);
 	return true;
-}
-bool Manage::removeEdge()
-{
-	cout << "è¯·è¾“å…¥è¦åˆ é™¤çš„è¾¹çš„ç¬¬ä¸€ä¸ªç»“ç‚¹ç¼–å·\n";
-	int a;
-	cin >> a;
-	cout << "è¯·è¾“å…¥è¦åˆ é™¤çš„è¾¹çš„ç¬¬äºŒä¸ªç»“ç‚¹ç¼–å·\n";
-	int b;
-	cin >> b;
-	if (!check(a) || !check(b))
-	{
-		return false;
-	}
-	if (!Route.removeEdge(a, b))
-	{
-		cout << "æ­¤è¾¹ä¸å­˜åœ¨\n";
-		return false;
-	}
-	cout << "åˆ é™¤æˆåŠŸï¼\n";
-	write2();
-}
-bool Manage::removeVertex()
-{
-	cout << "è¯·è¾“å…¥åˆ é™¤ç»“ç‚¹çš„ç¼–å·\n";
-	int a;
-	cin >> a;
-	if (!check(a))
-	{
-		return false;
-	}
-	a = Route.getVertexPos(a);
-	if (Route.removeVertex(a))
-		cout << "åˆ é™¤æˆåŠŸï¼\n\n";
-	write1();
-}
-void Manage::empty()
-{
-	Route.NodeTable = new Vertex[1000];
-	Route.numVertices = 0;
-	Route.numEdges = 0;
 }
 bool Manage::addVertex()
 {
 
 	Vertex a;
-	cout << "è¯·è¾“å…¥è¦æ·»åŠ ç»“ç‚¹çš„ç¼–å·ï¼š" << endl;
+	cout << "ÇëÊäÈëÒªÌí¼Ó½áµãµÄ±àºÅ£º" << endl;
 	cin >> a.id;
 	if (Route.getVertexPos(a.id) != -1)
 	{
-		cout << "è¯¥ç»“ç‚¹å·²å­˜åœ¨ï¼\n";
+		cout << "¸Ã½áµãÒÑ´æÔÚ£¡\n";
 		return false;
 	}
-	cout << "è¯·è¾“å…¥è¦æ·»åŠ ç»“ç‚¹çš„åç§°ï¼š" << endl;
+	cout << "ÇëÊäÈëÒªÌí¼Ó½áµãµÄÃû³Æ£º" << endl;
 	cin >> a.name;
 	Route.insertVertex(a);
 	write1();
@@ -231,15 +234,15 @@ bool Manage::addEdge()
 {
 	int b, c;
 	double cost;
-	cout << "è¯·è¾“å…¥è¦æ·»åŠ è¾¹çš„ç»“ç‚¹1çš„ç¼–å·ï¼š" << endl;
+	cout << "ÇëÊäÈëÒªÌí¼Ó±ßµÄ½áµã1µÄ±àºÅ£º" << endl;
 	cin >> b;
-	cout << "è¯·è¾“å…¥è¦æ·»åŠ çš„è¾¹çš„ç»“ç‚¹2çš„ç¼–å·ï¼š" << endl;
+	cout << "ÇëÊäÈëÒªÌí¼ÓµÄ±ßµÄ½áµã2µÄ±àºÅ£º" << endl;
 	cin >> c;
 	if (!check(b) || !check(c))
 	{
 		return false;
 	}
-	cout << "è¯·è¾“å…¥è¾¹çš„æƒå€¼ï¼š" << endl;
+	cout << "ÇëÊäÈë±ßµÄÈ¨Öµ£º" << endl;
 	cin >> cost;
 	Route.insertEdge(b, c, cost);
 	write2();
@@ -264,24 +267,64 @@ bool Manage::check(int id)
 {
 	if (Route.getVertexPos(id) == -1)
 	{
-		cout << "è·¯ç”±è¡¨ä¸­å°šæ— è¯¥ç»“ç‚¹ï¼\n\n";
-		cout << "æ˜¯å¦æ·»åŠ è¯¥ç»“ç‚¹ï¼Ÿ\n\n";
-		cout << "1.æ˜¯      2.å¦\n\n";
+		cout << "Â·ÓÉ±íÖĞÉĞÎŞ¸Ã½áµã£¡\n\n";
+		cout << "ÊÇ·ñÌí¼Ó¸Ã½áµã£¿\n\n";
+		cout << "1.ÊÇ      2.·ñ\n\n";
 		int ans;
 		cin >> ans;
 		switch (ans)
 		{
-		default:cout << "æ“ä½œå¤±è´¥,è¾“å…¥äº†æ— æ³•è¯†åˆ«çš„æŒ‡ä»¤\n\n"; return false;
+		default:cout << "²Ù×÷Ê§°Ü,ÊäÈëÁËÎŞ·¨Ê¶±ğµÄÖ¸Áî\n\n"; return false;
 		case 1: {
 			Vertex a;
 			a.id = id;
-			cout << "è¯·è¾“å…¥è¦æ·»åŠ ç»“ç‚¹çš„åç§°ï¼š\n\n" << endl;
+			cout << "ÇëÊäÈëÒªÌí¼Ó½áµãµÄÃû³Æ£º\n\n" << endl;
 			cin >> a.name;
 			Route.insertVertex(a);
 			write1();
 		}break;
-		case 2:cout << "è¿”å›ä¸»ç•Œé¢ï¼\n\n"; return false;
+		case 2:cout << "·µ»ØÖ÷½çÃæ£¡\n\n"; return false;
 		}
 	}
 	return true;
+}
+bool Manage::removeEdge()
+{
+	cout << "ÇëÊäÈëÒªÉ¾³ıµÄ±ßµÄµÚÒ»¸ö½áµã±àºÅ\n";
+	int a;
+	cin >> a;
+	cout << "ÇëÊäÈëÒªÉ¾³ıµÄ±ßµÄµÚ¶ş¸ö½áµã±àºÅ\n";
+	int b;
+	cin >> b;
+	if (!check(a) || !check(b))
+	{
+		return false;
+	}
+	if (!Route.removeEdge(a, b))
+	{
+		cout << "´Ë±ß²»´æÔÚ\n";
+		return false;
+	}
+	cout << "É¾³ı³É¹¦£¡\n";
+	write2();
+}
+bool Manage::removeVertex()
+{
+	cout << "ÇëÊäÈëÉ¾³ı½áµãµÄ±àºÅ\n";
+	int a;
+	cin >> a;
+	if (!check(a))
+	{
+		return false;
+	}
+	a = Route.getVertexPos(a);
+	if (Route.removeVertex(a))
+		cout << "É¾³ı³É¹¦£¡\n\n";
+	write1();
+}
+void Manage::empty()
+{
+	Route.NodeTable = new Vertex[1000];
+	Route.numVertices = 0;
+	Route.numEdges = 0;
 }
