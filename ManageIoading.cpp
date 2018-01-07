@@ -1,4 +1,6 @@
 #include"Manage.h"
+//修正了重定义函数的bug，删除了不可显示的制表符和无法显示的字符（在下并不知道为什么会出现制表符）
+//顺序打印path数组中的最短路径
 void Manage::print(Graph& G, int v, double dist[], int path[])
 {
 	cout << endl << "路由器" << G.getvalue(v) << "的路由表：" << endl;
@@ -33,10 +35,11 @@ void Manage::print(Graph& G, int v, double dist[], int path[])
 	}
 	delete[] d;
 }
+
 //dijstra算法求最短路径
+//以起始点为中心向外层层扩展，直到扩展到终点为止。
 void Manage::ShortestPath(Graph& G, int v, int *path, double *dist)
-{//Graph是一个带权有向图，本算法建立一个数组，dist[j],0<=j<n;是当前求到的从顶点v到顶点j的最短路径长度，同时用数组path存放求到的最短路径
- /*int n = G.NumberOfVertices();//得到总点数
+{ /*int n = G.NumberOfVertices();//得到总点数
  int j = v;//初始化j为出发点
  int w;//定义下一节点
  int *dis = new int(n+5);//距离数组
@@ -78,8 +81,8 @@ void Manage::ShortestPath(Graph& G, int v, int *path, double *dist)
  }
  print(G, v, dis, p);//输出最小路径
  return ;//返回*/
- //Graph是一个带权有向图，本算法建立一个数组，dist[j],0<=j<n;是当前求到的从顶点v到顶点j的最短路径长度，同时用数组path存放求到的最短路径
-
+ //Graph是一个带权有向图，本算法建立一个数组，dist[j],0<=j<n;
+ //是当前求到的从顶点v到顶点j的最短路径长度，同时用数组path存放求到的最短路径
 	int n = G.NumberOfVertices();
 	bool *S = new bool[n];
 	int i, j, k;
@@ -123,6 +126,9 @@ void Manage::ShortestPath(Graph& G, int v, int *path, double *dist)
 	}
 	print(G, v, dist, path);
 }
+
+//读文件没什么好说的，修正了读一半遇到重复节点时候就终止报错的bug
+//修正了读一个就打一个到屏幕上的美观问题
 bool Manage::GetInformation()
 {
 	Vertex vertex;
