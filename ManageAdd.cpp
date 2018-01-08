@@ -1,7 +1,7 @@
 #include"Manage.h"
 bool Manage::addVertex()
 {
-
+	cout << "周思佳" << endl;
 	Vertex a;
 	cout << "请输入要添加结点的编号：" << endl;
 	cin >> a.id;
