@@ -131,6 +131,7 @@ void Manage::ShortestPath(Graph& G, int v, int *path, double *dist)
 //修正了读一个就打一个到屏幕上的美观问题
 bool Manage::GetInformation()
 {
+	cout << "谭小乐" <<endl;
 	Vertex vertex;
 	Edge edge;
 	//读结点
